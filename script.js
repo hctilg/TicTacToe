@@ -13,7 +13,7 @@ setRounder();
 for (let i = 0; i < game_options.length; i++) {
     const game_option = game_options[i];
     game_option.addEventListener('click', (event) => {
-        var this_option = event.path[0];
+        var this_option = event.srcElement;
         this_option.value = sessionStorage.getItem('turn');
         sessionStorage.setItem('turn', (sessionStorage.getItem('turn') == 'O' ? 'X' : 'O'));
         setRounder();
@@ -107,7 +107,7 @@ function msgBox(text,color) {
     let elmBox = document.createElement('section');
     elmBox.setAttribute('id', 'alert');
     elmBox.classList.add(color);
-    elmBox.innerHTML = '<div><h2>' + text +'<h2><button class="btn" onclick="(event.path[3]).remove()">OK</button></div>'
+    elmBox.innerHTML = '<div><h2>' + text +'<h2><button class="btn" onclick="(event.srcElement.parentNode.parentNode.parentNode).remove()">OK</button></div>'
     document.body.appendChild(elmBox);
 
 }
@@ -124,5 +124,5 @@ btn_reset.addEventListener('click', (event) => {
         sessionStorage.setItem('turn', newTuen());
         setRounder()
     }
-    event.path[0].style.display = 'none';
+    event.srcElement.style.display = 'none';
 });

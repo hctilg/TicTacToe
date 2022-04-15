@@ -118,8 +118,13 @@ body {
     background-color: #fafbfb;
     color: #728292;
 
-    padding: 0 10pt;
+    width: 3.5rem;
+    height: 3.5rem;
     border-radius: 50pt;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     font-size: 45px;
     font-family: 'Comic Sans MS', serif;
