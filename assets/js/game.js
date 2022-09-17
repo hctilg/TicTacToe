@@ -154,8 +154,8 @@ export class Game {  /* The TicTacToe Game */
 
                 var res = checkGame(game_all_options);
                 
-                if (res.X) this.alert().victory(`${(sessionStorage.getItem('you') == 'X') ? 'You' : 'Bot'} is winner`);
-                else if (res.O) this.alert().victory(`${(sessionStorage.getItem('you') == 'O') ? 'You' : 'Bot'} is winner`);
+                if (res.X) this.alert().victory(`${(sessionStorage.getItem('you') == 'X') ? 'You' : 'Bot'} won!`);
+                else if (res.O) this.alert().victory(`${(sessionStorage.getItem('you') == 'O') ? 'You' : 'Bot'} won!`);
                 else {
                     if (res.status) this.alert().equal('Severe equal.');
                     else setTurn();
@@ -207,9 +207,9 @@ export class Game {  /* The TicTacToe Game */
 
                             game_options[getRandomItem(game_null_options)].click();
 
-                            setTimeout(() => gameBox.classList.remove('loading'), 1200);
+                            setTimeout(() => gameBox.classList.remove('loading'), 700);
 
-                        }, 2000);
+                        }, 500);
 
                     }
                 });
@@ -221,8 +221,8 @@ export class Game {  /* The TicTacToe Game */
 
                 var res = checkGame(game_all_options);
 
-                if (res.X) this.alert().victory(`User_X is winner`);
-                else if (res.O) this.alert().victory(`User_O is winner`);
+                if (res.X) this.alert().victory(`User_X won!`);
+                else if (res.O) this.alert().victory(`User_O won!`);
                 else {
                     if (res.status) this.alert().equal('Severe equal.');
                     else setTurn();
