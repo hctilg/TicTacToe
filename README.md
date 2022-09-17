@@ -2,7 +2,7 @@
 
 <section align="center">
 
-  ![demo](https://raw.githubusercontent.com/msfpt/TicTacToe/main/demo.png)
+  ![demo](demo.png)
   
   **X & O with JavaScript**
 

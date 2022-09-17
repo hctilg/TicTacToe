@@ -1,60 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no">
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=0.8, user-scalable=no">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <title>MsfPt :: TicTacToe</title>
-    <noscript>
-      <meta http-equiv="refresh" content="0; url=https://github.com/msfpt/TicTacToe">
-    </noscript>
-    <meta name="title" content="MsfPt :: TicTacToe">
-    <meta name="theme-color" content="dark">
-    <meta name="description" content="TicTacToe with JavaScript">
-    <meta name="keywords" content="msfpt, msf, tic-tac-toe, x-and-o, javascript, js">
+
+    <title>TicTacToe Game with JavaScript, html, css - MsfPt Github Page</title>
+
+    <meta name="title" content="TicTacToe Game with JavaScript, html, css - MsfPt Github Page">
+    <meta name="description" content="TicTacToe Game with JavaScript, html, css - MsfPt Github Page">
+    <meta name="keywords" content="tic-tac-toe, game, x-and-o, rival, robot, javascript, js, ui, github-page, msfpt">
     <meta name="robots" content="index, follow">
     <meta name="revisit-after" content="1 days">
     <meta name="author" content="MSFPT">
-    <meta property="og:title" content="MsfPt :: TicTacToe" />
+
+    <meta name="theme-color" content="dark">
+    <meta name="MobileOptimized" content="176">
+    <meta name="HandheldFriendly" content="True">
+
+    <meta property="og:title" content="TicTacToe Game with JavaScript, html, css - MsfPt Github Page" />
     <meta property="og:site_name" content="MsfPt">
     <meta property="og:image:type" content=image/png>
-    <meta property="og:image:url" content="https://msfpt.github.io/assets/img/msfpt.png">
-    <meta property="og:description" content="TicTacToe with JavaScript" />
-    <meta property="og:locale" content="en_US, ir_FA">
-    <meta name="viewport" content="width=device-width, initial-scale=0.6, maximum-scale=0.6, user-scalable=no">
-    <link rel="shortcut icon" type="image/x-icon" href="https://msfpt.github.io/assets/img/icon.png" />
-    <link rel="stylesheet" type="text/css" href="https://msfpt.github.io/TicTacToe/style.css">
-    <script type="text/javascript" async="true" src="https://msfpt.github.io/GitHubStar/github-star.js" status="GitHubStar" user="msfpt" repository="TicTacToe"></script>
-    <script type="text/javascript" defer="true" src="https://msfpt.github.io/TicTacToe/script.js"></script> 
+    <meta property="og:image:url" content="https://raw.githubusercontent.com/msfpt/TicTacToe/main/demo.png">
+    <meta property="og:description" content="TicTacToe Game with JavaScript, html, css - MsfPt Github Page" />
+    <meta property="og:locale" content="en_US">
+    
+    <link rel="apple-touch-icon" href="https://msfpt.github.io/assets/icons/apple-touch-icon.png"/>
+    <link rel="alternate icon" type="image/x-icon" href="https://msfpt.github.io/favicon.ico"/>
+    <link rel="shortcut icon" type="image/x-icon" href="https://msfpt.github.io/favicon.ico"/>
+    
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css"/>
+    <script type="module" src="assets/js/app.js"></script>
   </head>
-  <body translate="no">
-    <h1 id="title">TicTacToe</h1>
-    <section id="edit-user-box" style="display: none;">
-        <div>
-            <i class="close">&times;</i>
-            <input type="text" name="" id="" placeholder="User X" title="User(X)" minlength="3" maxlength="25" spellcheck="false" required />
-            <input type="text" name="" id="" placeholder="User O" title="User(O)" minlength="3" maxlength="25" spellcheck="false" required />
-            <input type="button" class="btn" value="Save" />
-        </div>
-    </section>
-    <button id="btn-edit-user">
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAABmJLR0QA/wD/AP+gvaeTAAAFI0lEQVRYhe3WWUxUVxjA8f8dNsWqWKxjR0SxETTWItRCwaJoiA3FJmJiUmSgJGqFVqov1TZpX9q40D60ruDCBJU2mFApDFSqyKKIG1qhrpNiFSOyuMy904QCzpw+MDMiDIgy0KTxS+7T/c69v3u+851z4UX8z0Ma6hcqijJHCLFakqRJwBWLxbLJy8urbqgdDkOW5bWKopgVRRG2y2g0ttbW1i79r202nDAaZZGx7ZBITtgg8nLLbciOqqqqREfjXIYKJ0nS9xaLIP2HQ5QfPss8qYV9pXWMeGk4AdN9VWPHjn0/Ojq6Pisrq2ZIgTacEILd2/M5VXqRjb4PifBqZ+rwR2wru43nCA8Cpvuq1Gp19Pjx438rLi5uGBKgLMtrrDhp+5Z8TlRc5cvQl/HvaAZA42HBb9gjtpXWo9Z44zflVVcXF5eJOp0uFzADqIYCt3NLHlXHLxG56AOuByZhnBxozwsZ2U6sdysl+lMAeHt7+wKTbfcHBWgymVbZcOlb8zl94ne+S7zFDD9BWzscmxJvR/7Z6sqvsidvhs8A4MGDB02A56ABTSbTKiFEuhBC2rW9gFPHz5OWcIfXxv3DAo+vmTC6xY68OGY6X932YsF7ocQujUAIYc7MzCwBHg4KUJblVBtu944CTpZXk5ZwB79xHdaXmZnv/g2a0fdovNvMhmqF+dGhrEiJQQghcnNzM3U63QWg3vZMpzWJyWT6CNhhw1WWVpOW+BhnC5VkwXLvDHtzbxG1MJiVKTEAoqCgICspKakQqADabPmuzsIJITI6cXoqy6pJS2jogQOoa3Tni+xxRC0MYnlyNIDIz8/PSkhIyAeOAX8/8UHOxlWUnGNDXAN+6naHuPXZGiKjQlieHIMkSX3iBgxUFGWlHbezE7dZ28BUTe+4OfOCWZGyqF+4AQEVRVkJ7LLjjlb3C5fy6eJ+454b6Bh3xyHuRpMb67M1hM8NsuMKCgr29Qf3XMCuuD3phVQcrWZTn7gJhM8N4uM1sXacVqv9pT84eMYutuIybLiyI2fZrG3Avw9cWMTz4+AZZlBRlBVWnKrfuHdmDQgH/fzlt+J2PTNu7ZIB4foFfBJXRNmRM73i/mpyZ122xmk4eEqJFUVZ3h23SXt3yHB9Aq243d1xAZq2Hrm94PYPFAe9lNiK2yOEkPamF1HaB66+xY112T6EhAeSsmYJKpVzZq5XoNFo9FOpVNcBt317iykuPPlU3Fvhnd1qxe3XarV5zsCBg31QkqTFgNvx8loOF53m216Or5vNbqzbP4HwyCCSUztPCL1ef8CZOHCwBiVJigQ4f85AZJgP/m/H9Bh0+54bn//oQ2hEEKtWP8bFx8cfciauB1AIoQIiAC7X3iRo2khch3kj+cY+gfvsgA+zwwLtZe2CK3UmrgdQluVZwJimxoc0NxuZGeAFYEd2xX2ytrMhCgsLu+JMzsRBtzWoUqkiAf6ouYG7hwsZPxlITZzGJYORmqtGSqomETbnddtWQklJSc6yZcsGDdcDiLW8NRfq6Gg3U3WhhYozzYwaNZyZb0ziwxWLiHo3GEmSKCoqOhAXF/fzYOIcAb0BRo72ZHaIP8GzA5gZ6MdE31eQpM4dSQhh0ev12fHx8XmDjYNu+6Asy6mSJG3tnmQ2m9saGxsN165du3Lw4MHqnJycK8CJwcb1AAohpMrKyo1qtXqx2WxuNxgM18vKyi7rdDqDoiiNQDPQBNwHxGDjegC7xERADbRaUfcBy1CAXoSz419aCTzutcDk0gAAAABJRU5ErkJggg==" alt="edit-user">
-        <span>Edit Users</span>
-    </button>
-    <div id="round">
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAJ+ElEQVRoge2Ze3BU5RnGf2fvS5ZNNslugFwglw1BYkwAL5WAiMHgjbEW1PEGLZepJV4GZLTVGchorTitVactrVosOi2tTqUjKqKAVISogDEXQJAkhJB7SLJ7spvNXs7XP5YspLmwJ4DOdPr89c33nff9nuec7/K+74H/EUgX26EQQtPT05OjKEq6JEmJgB1QhBDtGo3mlMViKZMkyXex570oQoQQkizLtwBLgBuBsSM86wG2CiGejIuLq70Y88NFEOJ2u2cBLwAz1NgpitLX2dm5IiMj440L5QAXKESW5aeEEKWABsDj8fFl2Tcc/aaB+hOtnGrowOvxIRDExVlwZiczc3YuhbNz0Wg0KIoSam1tfdFutz8dHx/v+l6EuN3uXwFPAPj9Af7xt91s3VKGz+c/r+2Uy9J4+rkfYzDqAQiFQrLf7y9JSkoa9dcZlRBZlu8SQvwdoL3NxbqnNtFQ36bKR+pEB4+suoPsnJRIX2tr66tOp3PFaDipFtLe3j7WaDTWAokul4fHV71K06mO0cwNQMG0LB5efQcJiVYAKisrf1tYWLhKrR+NWgODwfATIBFg02vbL0gEQPlXx1n90AZamjsBmDp1asm6devmq/WjWogkST8DqKttZueOcrXmQ6KzU+a5pzejKAparVZfVFS0ihGO8KGgSojH4xkPZAPs2vE1QhFqzEdEbU0zez89BEBOTs61aWlpeWrsVQkJhUJX97cPV51QYzpw0mFm3fdZWIjBYIhZtGjRdWr4qRIiSVJyf7v5zJpWC0kDa+5MJy9j8Mo5UdcSaWdlZaUA8dH6VSVECGHqb3t61IdLcRY9pQ9kMf+qRJYUTxg03tLcFWknJSXZULFPdCq5RIRrdRqCgVBURka9htsLHdxfNJ4Yc3jKAqeVmblx7K3uPutcc/Y2UBRFAczRElMlRAhxSpLCk5lNRuSAd9hntRqJqZMszJuewPX5toiAc7HmznSq66pweYIA6PXayJjX6/UBUZ8mqoRIknSyvx0bF4Msh4VYzDocNj2pdjMZ483kpMVweYYFs0E7rC+AWIuONXdN4qmNxwGIs1kiYzU1NW1A8FIJWShE+CWlpCZyqqEdk1HD1l8WqHEzADNzbRh1GvqCCskpiZH+uXPnTistLX05Wj9Rb3a3271ACPEohKPcREccAIlWQ/Ssh4HdFvZhT4rF4wkfIgUFBTdu3rz57mh9RC1EkqQSAH9fgJXLXuK9f5UBYLOoPS8Go9/HB+9+ycplL9HnCwCQn5+/BEgewTSCqFkIIa4E2LvnEJ2dMutXZNPuCjLdqSqSGBK/uDeTA9/KOGJ1PP7KMfbtqeb6eQXY7fYMwpFE4/l8qHmdMQBulweAvPSxmIyqQ7UhMS7ewK1XJ+DrUwCQT58Ok9PpjER5Kaph0gQwPjkBgKOnPCpMo0O/z/GpSQD09vZ2E+XLVrNH9gLk5WdgtZp5/cMm/EFFNdnh4A8q/GV7I7FjDVw+fTIAjY2Nx4DeaOyjFqIoyhsAJpOBFStvo6pOZuHaCu5+poodB0+PhjsA3Z4gpW/UsnBtBZU1PSx/8FZMpvAptnXr1j1AVAlP1HskNjZ2u8vl2ilJ0g2z5+ThSLKxZ1c5Bw/W4A2MTgTA5p3N7Dvkonj+NGbdUEDOlFQAGhsbq0tLSyuBumj8qNqtOp3ufuAQQM6UVJavXIDJZKDsmx6V9M+ivkMhJc3O8pIFEREul6tx6dKlfwBageZo/KgSEhMT0xwKhQp9Pt/LnImDnJNTqDreTTCoPskKhARVNV1k56RG+srLyz8uKipau2/fvpNAWbS+VJ+fNput2+FwPOLz+Q4BzLouF4/Xz85y9fnJjvIuvL0BCq/LBaCvr6+nuLh409GjRyuAj4lyo8MohPTDbDa/BZCXn0mmcwJ/3t5Mrz+6sB7A26fw+vZmspzJ5F2RAUBtbe1XPp+vFzgInL9Adg5GLSQYDL4phAgAPFiygI5uH8+/3UB/UDkShBA8/88mTnf5ePCh2yL977zzzqeE7yvV63TUQmw22wm/378JIDsnhSVLi9l9sJ23PmmhUw4MK6jbE+St3a38+0AzS5YV45wcLtA1NjZWr1+//jAwqsL2qIXIsjzVaDRGUt8fLiwEwONXONrgYU9lNxW1MscaPHzb6KW6Tuaz6m6q63ro6QuLvP1HMyP+vF6vp6SkZAygrmQ5GiFCCJMsy4tcLtfHQogq4L7+MdeZGEwymJjmtGIZo6XD5aehw8fJtl5au/3oNBIFWWORjOYBNgBOp/PqZ5999rWurq5yWZZXtLW1WVCBqEqmbrc7WwjxqCRJ9wLW/n5FEVR+XcNH2w7wedkRgoEQjz2Qxy35xrCdJ4jbG0QRghiTjvixOiRJ4v0KP7/eVIFOr+WaH0zhxptmkJef+d85e4+iKH/V6XQvWK3WYxckRAhhlmX5l8DDQCRv7eyU+WRHOR++v5/Wli5MRj32CcnEODJZXdRHVkLfiJMeO23kxV1j8J+uo/lUA16vj4REK3Pm5nPzbVdhP5O0neGg+Hy+DQ6HY40kScMex8MK6e7utmk0mveAayH89g/uP8b2D/Zz4MtjKEKQaE/E4kgn1jEBSQqv0qlJvSybMXJ49Mr+RI60mc8QVXC1NdHTVkdHewcaSWLGVdkU33wl06/Mjnwlt9td0dLSUjRjxtDOh6wOCCH0gUBgKzAb4HB1PWt//jrvvfs5He09JKRkMPGy6diSszBZrPRXVgDaPXr0GkFG/NDXwI7jVvadPLv8JUnCZLFiTZpI/Lg0JI2W+m/r2bXjKz77tJqMzPHYHXEYjcZxwE02m+3N3bt3D3I+5BeRZflJIcQzAHt2V/HC829jMJpJyswl1j5hAPHhMDWplznpMmmx4TlPugx8UmflcKvpPJbhe8bV3kRLTTUBfy+PPXEnM2eFb/8vvvhi47x585YDA3KIQYzcbneCJEknhRBj6mqbWf3QHzFbbUzKuxat9sLzczVQggFqK8vok7v5ze9+yqT0cYRCob577rlnzrZt2z4/99lBx68Q4j4hxBiA1zZ8gEarY1LuNd+5CACNTk/65deAVsvGP20DQKvVGhcvXrwCGFC+GSREkqT5AE2Np6mqrCMxLRut/sJLPqOFVm/Anuqk4uvayM+g3NzcAmDSuc8NdSFeAXD4UD0AsYnjLy3TKBBrn4AQgsPVYU52u30iMIDYUOslHqC7K5wsHSn76NKyVIHOThkAo9FoAWznjg0lpB7Inj0nD5/PT+giFhguBFqdhtlzwj+xZFluA4znjg8SIknSS0KI3zuS4rhvcdF3w1Ildu7c+SEwIL8etEcsFsuGI0eOrHO73c2MIi+4VBBCCJfL1bRly5aNS5cu3QUcPXd8pJvNCUxG5d/VSwwByIRFHP+eufwfI+I/6FzeXvdz8bsAAAAASUVORK5CYII="/>
-        <span>Loading</span>
-    </div>
-    <section id="game-box">
-      <input type="button" value="" game-option />
-      <input type="button" value="" game-option />
-      <input type="button" value="" game-option />
-      <input type="button" value="" game-option />
-      <input type="button" value="" game-option />
-      <input type="button" value="" game-option />
-      <input type="button" value="" game-option />
-      <input type="button" value="" game-option />
-      <input type="button" value="" game-option />
-    </section>
-    <input type="button" id="btn-reset" class="btn" value="Reset" style="display: none;" />
+  <body spellcheck="false" dir="auto">
+    <span>Loading ...</span>
+    <h1 hidden>TicTacToe Game</h1>
+    <h2 hidden>MsfPt Github Page</h2>
+    <h3 hidden>HTML, JavaScript, CSS</h3>
+    <a hidden href="https://github.com/msfpt" title="MsfPt - Github"></a>
+    <a hidden href="https://msfpt.github.io" title="MsfPt - Github Page"></a>
+    <a hidden href="https://github.com/msfpt/TicTacToe" title="MsfPt - TicTacToe Game"></a>
+    <a hidden href="https://msfpt.github.io/TicTacToe" title="MsfPt - TicTacToe Game - Github Page"></a>
   </body>
 </html>
