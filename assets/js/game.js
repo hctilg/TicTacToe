@@ -362,11 +362,27 @@ export class Game {  /* The TicTacToe Game */
         var rbtn_bot = document.createElement('input');
         rbtn_bot.id = "bot_rival";
         rbtn_bot.value = "bot";
-        rbtn_bot.checked = true;
+        // rbtn_bot.checked = true;
 
         rbtn_user.type = rbtn_bot.type = 'radio';
         
         rbtn_user.name = rbtn_bot.name = 'rival';
+
+        const next = event => {
+
+            var rival = document.querySelector('input[name="rival"]:checked').value;
+
+            rival = (rival == 'user' ? rival : 'bot');
+
+            document.querySelector('#getTypeRival').remove();
+
+            this.checkUpStart(rival);
+
+        }
+
+        rbtn_user.addEventListener('click', next);
+        
+        rbtn_bot.addEventListener('click', next);
 
         g3_box.appendChild(title_g3);
 
@@ -379,23 +395,6 @@ export class Game {  /* The TicTacToe Game */
         g3_items.appendChild(label_bot);
 
         g3_box.appendChild(g3_items);
-
-        var next_g3_btn = document.createElement('button');
-        next_g3_btn.classList.add('next-btn');
-        next_g3_btn.innerText = "Next";
-        next_g3_btn.addEventListener('click', event => {
-
-            var rival = document.querySelector('input[name="rival"]:checked').value;
-            
-            rival = (rival == 'user' ? rival : 'bot');
-
-            document.querySelector('#getTypeRival').remove();
-
-            this.checkUpStart(rival);
-
-        });
-
-        g3_box.appendChild(next_g3_btn);
 
         this.app.appendChild(g3_box);
 
