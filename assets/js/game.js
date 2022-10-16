@@ -28,9 +28,9 @@ export class Game {  /* The TicTacToe Game */
             this.app.innerHTML = '';
 
             const chRemoveSession = session => {
-            
+
                 if (sessionStorage.getItem(session)) sessionStorage.removeItem(session);
-            
+
             }
 
             var sessionNames = ["turn", "you", "rival"];
@@ -56,36 +56,36 @@ export class Game {  /* The TicTacToe Game */
         sessionStorage.setItem('turn', first_turn);
 
         sessionStorage.setItem('you', first_turn);
-        
+
         sessionStorage.setItem('rival', rival);
 
         this.ch_it_time = setInterval(() => {
 
-            if (!sessionStorage.getItem('turn')) location.reload();
+            if (!sessionStorage.getItem('turn')) this.start();
             else {
 
                 let _tmp_turn = sessionStorage.getItem('turn');
-            
-                if (!(_tmp_turn == 'X' || _tmp_turn == 'O')) location.reload();
-            
+
+                if (!(_tmp_turn == 'X' || _tmp_turn == 'O')) this.start();
+
             };
 
-            if (!sessionStorage.getItem('you')) location.reload();
+            if (!sessionStorage.getItem('you')) this.start();
             else {
-            
+
                 let _tmp_turn = sessionStorage.getItem('you');
-            
-                if (!(_tmp_turn == 'X' || _tmp_turn == 'O')) location.reload();
-            
+
+                if (!(_tmp_turn == 'X' || _tmp_turn == 'O')) this.start();
+
             };
 
-            if (!sessionStorage.getItem('rival')) location.reload();
+            if (!sessionStorage.getItem('rival')) this.start();
             else {
-                
+
                 let _tmp_rival = sessionStorage.getItem('rival');
-                
-                if (!(_tmp_rival == 'bot' || _tmp_rival == 'user')) location.reload();
-            
+
+                if (!(_tmp_rival == 'bot' || _tmp_rival == 'user')) this.start();
+
             };
 
         }, 2000);
@@ -93,34 +93,34 @@ export class Game {  /* The TicTacToe Game */
         this.createGameOpts();
 
         const game_options = document.querySelectorAll('#game-box input[type="button"][game-option]');
-        
+
         const setTurn = () => {
-            
+
             sessionStorage.setItem('turn', (sessionStorage.getItem('turn') == 'X') ? 'O' : 'X');
-            
+
             const turn = document.querySelector('#turn span');
-            
+
             turn.innerText = (sessionStorage.getItem('turn') == sessionStorage.getItem('you')) ? 'you' : 'rival';
-        
+
         }
 
         const checkGame = (game_all_options, turn) => {
-            
+
             let values = [];
 
             for (let i = 0; i < game_all_options.length; i++) {
-                
+
                 const game_option = game_all_options[i];
-                
+
                 values[i + 1] = game_option.value;
-            
+
             }
 
             let status = values.join('').length > 8; // or ... >= 9
 
             const checker_game = turn => {
                 return (
-                       (values[1] == turn && values[2] == turn && values[3] == turn) // (—) 1 = 2 = 3
+                    (values[1] == turn && values[2] == turn && values[3] == turn) // (—) 1 = 2 = 3
                     || (values[4] == turn && values[5] == turn && values[6] == turn) // (—) 4 = 5 = 6
                     || (values[7] == turn && values[8] == turn && values[9] == turn) // (—) 7 = 8 = 9
                     || (values[1] == turn && values[4] == turn && values[7] == turn) // (|) 1 = 4 = 7
@@ -143,7 +143,7 @@ export class Game {  /* The TicTacToe Game */
                 O: checked_O,
                 status: status
             }
-            
+
         }
 
         if (rival == 'bot') {
@@ -153,7 +153,7 @@ export class Game {  /* The TicTacToe Game */
             const checker = game_all_options => {
 
                 var res = checkGame(game_all_options);
-                
+
                 if (res.X) this.alert().victory(`${(sessionStorage.getItem('you') == 'X') ? 'You' : 'Bot'} won!`);
                 else if (res.O) this.alert().victory(`${(sessionStorage.getItem('you') == 'O') ? 'You' : 'Bot'} won!`);
                 else {
@@ -161,6 +161,302 @@ export class Game {  /* The TicTacToe Game */
                     else setTurn();
                 }
 
+            }
+
+            const checker_items_bot = game_items => {
+
+                let values = [];
+
+                for (let index = 0; index < game_items.length; index++) {
+
+                    const game_item = game_items[index];
+
+                    values[index + 1] = game_item.value;
+
+                }
+
+                // .........................................
+
+                const checker_values = values => {
+
+                    const user_char = sessionStorage.getItem('you');
+
+                    const bot_char = (user_char == 'X') ? 'O' : 'X';
+
+                    const ch_val = (values, array_item) => {
+                        return (
+                            values[1] == array_item[0] && values[2] == array_item[1] && values[3] == array_item[2] &&
+                            values[4] == array_item[3] && values[5] == array_item[4] && values[6] == array_item[5] &&
+                            values[7] == array_item[6] && values[8] == array_item[7] && values[9] == array_item[8]
+                        );
+                    };
+
+                    if (false);
+
+                    else if (ch_val(values, [user_char, '', '', '', '', '', '', '', ''])) return getRandomItem([1, 3, 4]);  // 1 => 2, 4, 5
+                    else if (ch_val(values, ['', user_char, '', '', '', '', '', '', ''])) return getRandomItem([0, 2, 4]);  // 2 => 1, 3, 5
+                    else if (ch_val(values, ['', '', user_char, '', '', '', '', '', ''])) return getRandomItem([1, 4, 5]);  // 3 => 2, 5, 6
+                    else if (ch_val(values, ['', '', '', user_char, '', '', '', '', ''])) return getRandomItem([0, 4, 6]);  // 4 => 1, 5, 7
+                    else if (ch_val(values, ['', '', '', '', user_char, '', '', '', ''])) return getRandomItem([0, 2, 6, 8]);  // 5 => 1, 3, 7, 9
+                    else if (ch_val(values, ['', '', '', '', '', user_char, '', '', ''])) return getRandomItem([2, 4, 8]);  // 6 => 3, 5, 9
+                    else if (ch_val(values, ['', '', '', '', '', '', user_char, '', ''])) return getRandomItem([3, 4, 7]);  // 7 => 4, 5, 8
+                    else if (ch_val(values, ['', '', '', '', '', '', '', user_char, ''])) return getRandomItem([4, 6, 8]);  // 8 => 5, 7, 9
+                    else if (ch_val(values, ['', '', '', '', '', '', '', '', user_char])) return getRandomItem([4, 5, 7]);  // 9 => 5, 6, 8
+
+
+                    else if (ch_val(values, [user_char, bot_char, user_char, '', '', '', '', '', ''])) return 4;  // 1, 2, 3 => 5
+                    else if (ch_val(values, [user_char, bot_char, '', user_char, '', '', '', '', ''])) return 6;  // 1, 2, 4 => 7
+                    else if (ch_val(values, [user_char, bot_char, '', '', user_char, '', '', '', ''])) return 8;  // 1, 2, 5 => 9
+                    else if (ch_val(values, [user_char, bot_char, '', '', '', user_char, '', '', ''])) return 3;  // 1, 2, 6 => 4
+                    else if (ch_val(values, [user_char, bot_char, '', '', '', '', user_char, '', ''])) return 3;  // 1, 2, 7 => 4
+                    else if (ch_val(values, [user_char, bot_char, '', '', '', '', '', user_char, ''])) return 6;  // 1, 2, 8 => 7
+                    else if (ch_val(values, [user_char, bot_char, '', '', '', '', '', '', user_char])) return 4;  // 1, 2, 9 => 5
+
+                    else if (ch_val(values, [user_char, user_char, '', bot_char, '', '', '', '', ''])) return 2;  // 1, 4, 2 => 3
+                    else if (ch_val(values, [user_char, '', user_char, bot_char, '', '', '', '', ''])) return 1;  // 1, 4, 3 => 2
+                    else if (ch_val(values, [user_char, '', '', bot_char, user_char, '', '', '', ''])) return 8;  // 1, 4, 5 => 9
+                    else if (ch_val(values, [user_char, '', '', bot_char, '', user_char, '', '', ''])) return getRandomItem([2, 8]);  // 1, 4, 6 => 3, 9
+                    else if (ch_val(values, [user_char, '', '', bot_char, '', '', user_char, '', ''])) return 4;  // 1, 4, 7 => 5
+                    else if (ch_val(values, [user_char, '', '', bot_char, '', '', '', user_char, ''])) return 1;  // 1, 4, 8 => 2
+                    else if (ch_val(values, [user_char, '', '', bot_char, '', '', '', '', user_char])) return 4;  // 1, 4, 9 => 5
+
+                    else if (ch_val(values, [user_char, user_char, '', '', bot_char, '', '', '', ''])) return 2;  // 1, 5, 2 => 3
+                    else if (ch_val(values, [user_char, '', user_char, '', bot_char, '', '', '', ''])) return 1;  // 1, 5, 3 => 2
+                    else if (ch_val(values, [user_char, '', '', user_char, bot_char, '', '', '', ''])) return 6;  // 1, 5, 4 => 7
+                    else if (ch_val(values, [user_char, '', '', '', bot_char, user_char, '', '', ''])) return 2;  // 1, 5, 6 => 3
+                    else if (ch_val(values, [user_char, '', '', '', bot_char, '', user_char, '', ''])) return 3;  // 1, 5, 7 => 4
+                    else if (ch_val(values, [user_char, '', '', '', bot_char, '', '', user_char, ''])) return 6;  // 1, 5, 8 => 7
+                    else if (ch_val(values, [user_char, '', '', '', bot_char, '', '', '', user_char])) return getRandomItem([2, 6]);  // 1, 5, 9 => 3, 7
+
+
+                    else if (ch_val(values, [bot_char, user_char, user_char, '', '', '', '', '', ''])) return 4;  // 2, 1, 3 => 5
+                    else if (ch_val(values, [bot_char, user_char, '', user_char, '', '', '', '', ''])) return getRandomItem([4, 8]);  // 2, 1, 4 => 5, 9
+                    else if (ch_val(values, [bot_char, user_char, '', '', user_char, '', '', '', ''])) return 7;  // 2, 1, 5 => 8
+                    else if (ch_val(values, [bot_char, user_char, '', '', '', user_char, '', '', ''])) return 4;  // 2, 1, 6 => 5
+                    else if (ch_val(values, [bot_char, user_char, '', '', '', '', user_char, '', ''])) return 4;  // 2, 1, 7 => 5
+                    else if (ch_val(values, [bot_char, user_char, '', '', '', '', '', user_char, ''])) return 4;  // 2, 1, 8 => 5
+                    else if (ch_val(values, [bot_char, user_char, '', '', '', '', '', '', user_char])) return getRandomItem([4, 6, 7]);  // 2, 1, 9 => 5, 7, 8
+
+                    else if (ch_val(values, [user_char, user_char, bot_char, '', '', '', '', '', ''])) return 4;  // 2, 3, 1 => 5
+                    else if (ch_val(values, ['', user_char, bot_char, user_char, '', '', '', '', ''])) return 4;  // 2, 3, 4 => 5
+                    else if (ch_val(values, ['', user_char, bot_char, '', user_char, '', '', '', ''])) return 7;  // 2, 3, 5 => 8
+                    else if (ch_val(values, ['', user_char, bot_char, '', '', user_char, '', '', ''])) return 4;  // 2, 3, 6 => 5
+                    else if (ch_val(values, ['', user_char, bot_char, '', '', '', user_char, '', ''])) return getRandomItem([4, 7, 8]);  // 2, 3, 7 => 5, 8, 9
+                    else if (ch_val(values, ['', user_char, bot_char, '', '', '', '', user_char, ''])) return 8;  // 2, 3, 8 => 9
+                    else if (ch_val(values, ['', user_char, bot_char, '', '', '', '', '', user_char])) return getRandomItem([4, 6, 7]);  // 2, 3, 9 => 5, 7, 8
+
+                    else if (ch_val(values, [user_char, user_char, '', '', bot_char, '', '', '', ''])) return 2;  // 2, 5, 1 => 3
+                    else if (ch_val(values, ['', user_char, user_char, '', bot_char, '', '', '', ''])) return 0;  // 2, 5, 3 => 1
+                    else if (ch_val(values, ['', user_char, '', user_char, bot_char, '', '', '', ''])) return 0;  // 2, 5, 4 => 1
+                    else if (ch_val(values, ['', user_char, '', '', bot_char, user_char, '', '', ''])) return 2;  // 2, 5, 6 => 3
+                    else if (ch_val(values, ['', user_char, '', '', bot_char, '', user_char, '', ''])) return 0;  // 2, 5, 7 => 1
+                    else if (ch_val(values, ['', user_char, '', '', bot_char, '', '', user_char, ''])) return getRandomItem([0, 2, 6, 8]);  // 2, 5, 8 => 1, 3, 7, 9
+                    else if (ch_val(values, ['', user_char, '', '', bot_char, '', '', '', user_char])) return 2;  // 2, 5, 9 => 3
+
+
+                    else if (ch_val(values, [user_char, bot_char, user_char, '', '', '', '', '', ''])) return 4;  // 3, 2, 1 => 5
+                    else if (ch_val(values, ['', bot_char, user_char, user_char, '', '', '', '', ''])) return 4;  // 3, 2, 4 => 5
+                    else if (ch_val(values, ['', bot_char, user_char, '', user_char, '', '', '', ''])) return 6;  // 3, 2, 5 => 7
+                    else if (ch_val(values, ['', bot_char, user_char, '', '', user_char, '', '', ''])) return 8;  // 3, 2, 6 => 9
+                    else if (ch_val(values, ['', bot_char, user_char, '', '', '', user_char, '', ''])) return 4;  // 3, 2, 7 => 5
+                    else if (ch_val(values, ['', bot_char, user_char, '', '', '', '', user_char, ''])) return getRandomItem([4, 8]);  // 3, 2, 8 => 5, 9
+                    else if (ch_val(values, ['', bot_char, user_char, '', '', '', '', '', user_char])) return 5;  // 3, 2, 9 => 6
+
+                    else if (ch_val(values, [user_char, '', user_char, '', bot_char, '', '', '', ''])) return 1;  // 3, 5, 1 => 2
+                    else if (ch_val(values, ['', user_char, user_char, '', bot_char, '', '', '', ''])) return 0;  // 3, 5, 2 => 1
+                    else if (ch_val(values, ['', '', user_char, user_char, bot_char, '', '', '', ''])) return 0;  // 3, 5, 4 => 1
+                    else if (ch_val(values, ['', '', user_char, '', bot_char, user_char, '', '', ''])) return 8;  // 3, 5, 6 => 9
+                    else if (ch_val(values, ['', '', user_char, '', bot_char, '', user_char, '', ''])) return getRandomItem([0, 8]);  // 3, 5, 7 => 1, 9
+                    else if (ch_val(values, ['', '', user_char, '', bot_char, '', '', user_char, ''])) return 8;  // 3, 5, 8 => 9
+                    else if (ch_val(values, ['', '', user_char, '', bot_char, '', '', '', user_char])) return 5;  // 3, 5, 9 => 6
+
+                    else if (ch_val(values, [user_char, '', user_char, '', '', bot_char, '', '', ''])) return 1;  // 3, 6, 1 => 2
+                    else if (ch_val(values, ['', user_char, user_char, '', '', bot_char, '', '', ''])) return 0;  // 3, 6, 2 => 1
+                    else if (ch_val(values, ['', '', user_char, user_char, '', bot_char, '', '', ''])) return 0;  // 3, 6, 4 => 1
+                    else if (ch_val(values, ['', '', user_char, '', user_char, bot_char, '', '', ''])) return 6;  // 3, 6, 5 => 7
+                    else if (ch_val(values, ['', '', user_char, '', '', bot_char, user_char, '', ''])) return 4;  // 3, 6, 7 => 5
+                    else if (ch_val(values, ['', '', user_char, '', '', bot_char, '', user_char, ''])) return 4;  // 3, 6, 8 => 5
+                    else if (ch_val(values, ['', '', user_char, '', '', bot_char, '', '', user_char])) return 4;  // 3, 6, 9 => 5
+                        
+
+                    else if (ch_val(values, [bot_char, user_char, '', user_char, '', '', '', '', ''])) return 4;  // 4, 1, 2 => 5
+                    else if (ch_val(values, [bot_char, '', user_char, user_char, '', '', '', '', ''])) return 4;  // 4, 1, 3 => 5
+                    else if (ch_val(values, [bot_char, '', '', user_char, user_char, '', '', '', ''])) return 5;  // 4, 1, 5 => 6
+                    else if (ch_val(values, [bot_char, '', '', user_char, '', user_char, '', '', ''])) return 4;  // 4, 1, 6 => 5
+                    else if (ch_val(values, [bot_char, '', '', user_char, '', '', user_char, '', ''])) return getRandomItem([4, 8]);  // 4, 1, 7 => 5, 9
+                    else if (ch_val(values, [bot_char, '', '', user_char, '', '', '', user_char, ''])) return 4;  // 4, 1, 8 => 5
+                    else if (ch_val(values, [bot_char, '', '', user_char, '', '', '', '', user_char])) return 2;  // 4, 1, 9 => 3
+
+                    else if (ch_val(values, [user_char, '', '', user_char, bot_char, '', '', '', ''])) return 6;  // 4, 5, 1 => 7
+                    else if (ch_val(values, ['', user_char, '', user_char, bot_char, '', '', '', ''])) return 0;  // 4, 5, 2 => 1
+                    else if (ch_val(values, ['', '', user_char, user_char, bot_char, '', '', '', ''])) return getRandomItem([0, 1]);  // 4, 5, 3 => 1, 2
+                    else if (ch_val(values, ['', '', '', user_char, bot_char, user_char, '', '', ''])) return getRandomItem([0, 2, 6, 8]);  // 4, 5, 6 => 1, 3, 7, 9
+                    else if (ch_val(values, ['', '', '', user_char, bot_char, '', user_char, '', ''])) return 0;  // 4, 5, 7 => 1
+                    else if (ch_val(values, ['', '', '', user_char, bot_char, '', '', user_char, ''])) return 6;  // 4, 5, 8 => 7
+                    else if (ch_val(values, ['', '', '', user_char, bot_char, '', '', '', user_char])) return 6;  // 4, 5, 9 => 7
+
+                    else if (ch_val(values, [user_char, '', '', user_char, '', '', bot_char, '', ''])) return getRandomItem([2, 4]);  // 4, 7, 1 => 3, 5
+                    else if (ch_val(values, ['', user_char, '', user_char, '', '', bot_char, '', ''])) return 4;  // 4, 7, 2 => 5
+                    else if (ch_val(values, ['', '', user_char, user_char, '', '', bot_char, '', ''])) return 4;  // 4, 7, 3 => 5
+                    else if (ch_val(values, ['', '', '', user_char, user_char, '', bot_char, '', ''])) return 5;  // 4, 7, 5 => 6
+                    else if (ch_val(values, ['', '', '', user_char, '', user_char, bot_char, '', ''])) return 4;  // 4, 7, 6 => 5
+                    else if (ch_val(values, ['', '', '', user_char, '', '', bot_char, user_char, ''])) return 4;  // 4, 7, 8 => 5
+                    else if (ch_val(values, ['', '', '', user_char, '', '', bot_char, '', user_char])) return 4;  // 4, 7, 9 => 5
+
+
+                    else if (ch_val(values, [bot_char, user_char, '', '', user_char, '', '', '', ''])) return 7;  // 5, 1, 2 => 8
+                    else if (ch_val(values, [bot_char, '', user_char, '', user_char, '', '', '', ''])) return 6;  // 5, 1, 3 => 7
+                    else if (ch_val(values, [bot_char, '', '', user_char, user_char, '', '', '', ''])) return 5;  // 5, 1, 4 => 6
+                    else if (ch_val(values, [bot_char, '', '', '', user_char, user_char, '', '', ''])) return 3;  // 5, 1, 6 => 4
+                    else if (ch_val(values, [bot_char, '', '', '', user_char, '', user_char, '', ''])) return 2;  // 5, 1, 7 => 3
+                    else if (ch_val(values, [bot_char, '', '', '', user_char, '', '', user_char, ''])) return 1;  // 5, 1, 8 => 2
+                    else if (ch_val(values, [bot_char, '', '', '', user_char, '', '', '', user_char])) return getRandomItem([1, 2, 3, 6]);  // 5, 1, 9 => 2, 3, 4, 7
+
+                    else if (ch_val(values, [user_char, '', bot_char, '', user_char, '', '', '', ''])) return 8;  // 5, 3, 1 => 9
+                    else if (ch_val(values, ['', user_char, bot_char, '', user_char, '', '', '', ''])) return 7;  // 5, 3, 2 => 8
+                    else if (ch_val(values, ['', '', bot_char, user_char, user_char, '', '', '', ''])) return 5;  // 5, 3, 4 => 6
+                    else if (ch_val(values, ['', '', bot_char, '', user_char, user_char, '', '', ''])) return 3;  // 5, 3, 6 => 4
+                    else if (ch_val(values, ['', '', bot_char, '', user_char, '', user_char, '', ''])) return getRandomItem([0, 1, 5, 8]);  // 5, 3, 7 => 1, 2, 6, 9
+                    else if (ch_val(values, ['', '', bot_char, '', user_char, '', '', user_char, ''])) return 1;  // 5, 3, 8 => 2
+                    else if (ch_val(values, ['', '', bot_char, '', user_char, '', '', '', user_char])) return 0;  // 5, 3, 9 => 1
+
+                    else if (ch_val(values, [user_char, '', '', '', user_char, '', bot_char, '', ''])) return 8;  // 5, 7, 1 => 9
+                    else if (ch_val(values, ['', user_char, '', '', user_char, '', bot_char, '', ''])) return 7;  // 5, 7, 2 => 8
+                    else if (ch_val(values, ['', '', user_char, '', user_char, '', bot_char, '', ''])) return getRandomItem([0, 3, 7, 8]);  // 5, 7, 3 => 
+                    else if (ch_val(values, ['', '', '', user_char, user_char, '', bot_char, '', ''])) return 5;  // 5, 7, 4 => 6
+                    else if (ch_val(values, ['', '', '', '', user_char, user_char, bot_char, '', ''])) return 3;  // 5, 7, 6 => 4
+                    else if (ch_val(values, ['', '', '', '', user_char, '', bot_char, user_char, ''])) return 1;  // 5, 7, 8 => 2
+                    else if (ch_val(values, ['', '', '', '', user_char, '', bot_char, '', user_char])) return 0;  // 5, 7, 9 => 1
+
+                    else if (ch_val(values, [user_char, '', '', '', user_char, '', '', '', bot_char])) return getRandomItem([2, 5, 6, 7]);  // 5, 9, 1 => 3, 6, 7, 8
+                    else if (ch_val(values, ['', user_char, '', '', user_char, '', '', '', bot_char])) return 7;  // 5, 9, 2 => 8
+                    else if (ch_val(values, ['', '', user_char, '', user_char, '', '', '', bot_char])) return 6;  // 5, 9, 3 => 7
+                    else if (ch_val(values, ['', '', '', user_char, user_char, '', '', '', bot_char])) return 5;  // 5, 9, 4 => 6
+                    else if (ch_val(values, ['', '', '', '', user_char, user_char, '', '', bot_char])) return 3;  // 5, 9, 6 => 4
+                    else if (ch_val(values, ['', '', '', '', user_char, '', user_char, '', bot_char])) return 2;  // 5, 9, 7 => 3
+                    else if (ch_val(values, ['', '', '', '', user_char, '', '', user_char, bot_char])) return 1;  // 5, 9, 8 => 2
+                        
+                        
+                    else if (ch_val(values, [user_char, '', bot_char, '', '', user_char, '', '', ''])) return 4;  // 6, 3, 1 => 5
+                    else if (ch_val(values, ['', user_char, bot_char, '', '', user_char, '', '', ''])) return 4;  // 6, 3, 2 => 5
+                    else if (ch_val(values, ['', '', bot_char, user_char, '', user_char, '', '', ''])) return 4;  // 6, 3, 4 => 5
+                    else if (ch_val(values, ['', '', bot_char, '', user_char, user_char, '', '', ''])) return 3;  // 6, 3, 5 => 4
+                    else if (ch_val(values, ['', '', bot_char, '', '', user_char, user_char, '', ''])) return getRandomItem([0, 3, 4]);  // 6, 3, 7 => 1, 4, 5
+                    else if (ch_val(values, ['', '', bot_char, '', '', user_char, '', user_char, ''])) return 4;  // 6, 3, 8 => 5
+                    else if (ch_val(values, ['', '', bot_char, '', '', user_char, '', '', user_char])) return getRandomItem([4, 6]);  // 6, 3, 9 => 5, 7
+                    
+                    else if (ch_val(values, [user_char, '', '', '', bot_char, user_char, '', '', ''])) return 2;  // 6, 5, 1 => 3
+                    else if (ch_val(values, ['', user_char, '', '', bot_char, user_char, '', '', ''])) return 2;  // 6, 5, 2 => 3
+                    else if (ch_val(values, ['', '', user_char, '', bot_char, user_char, '', '', ''])) return 8;  // 6, 5, 3 => 9
+                    else if (ch_val(values, ['', '', '', user_char, bot_char, user_char, '', '', ''])) return getRandomItem([0, 2, 6, 8]);  // 6, 5, 4 => 1, 3, 7, 9
+                    else if (ch_val(values, ['', '', '', '', bot_char, user_char, user_char, '', ''])) return 8;  // 6, 5, 7 => 9
+                    else if (ch_val(values, ['', '', '', '', bot_char, user_char, '', user_char, ''])) return 8;  // 6, 5, 8 => 9
+                    else if (ch_val(values, ['', '', '', '', bot_char, user_char, '', '', user_char])) return 2;  // 6, 5, 9 => 3
+
+                    else if (ch_val(values, [user_char, '', '', '', '', user_char, '', '', bot_char])) return 4;  // 6, 9, 1 => 5
+                    else if (ch_val(values, ['', user_char, '', '', '', user_char, '', '', bot_char])) return 4;  // 6, 9, 2 => 5
+                    else if (ch_val(values, ['', '', user_char, '', '', user_char, '', '', bot_char])) return getRandomItem([0, 4]);  // 6, 9, 3 => 1, 5
+                    else if (ch_val(values, ['', '', '', user_char, '', user_char, '', '', bot_char])) return 4;  // 6, 9, 4 => 5
+                    else if (ch_val(values, ['', '', '', '', user_char, user_char, '', '', bot_char])) return 3;  // 6, 9, 5 => 4
+                    else if (ch_val(values, ['', '', '', '', '', user_char, user_char, '', bot_char])) return 4;  // 6, 9, 7 => 5
+                    else if (ch_val(values, ['', '', '', '', '', user_char, '', user_char, bot_char])) return 4;  // 6, 9, 8 => 5
+
+                        
+                    else if (ch_val(values, [user_char, '', '', bot_char, '', '', user_char, '', ''])) return 4;  // 7, 4, 1 => 5
+                    else if (ch_val(values, ['', user_char, '', bot_char, '', '', user_char, '', ''])) return 4;  // 7, 4, 2 => 5
+                    else if (ch_val(values, ['', '', user_char, bot_char, '', '', user_char, '', ''])) return 4;  // 7, 4, 3 => 5
+                    else if (ch_val(values, ['', '', '', bot_char, user_char, '', user_char, '', ''])) return 2;  // 7, 4, 5 => 3
+                    else if (ch_val(values, ['', '', '', bot_char, '', user_char, user_char, '', ''])) return 8;  // 7, 4, 6 => 9
+                    else if (ch_val(values, ['', '', '', bot_char, '', '', user_char, user_char, ''])) return 8;  // 7, 4, 8 => 9
+                    else if (ch_val(values, ['', '', '', bot_char, '', '', user_char, '', user_char])) return 7;  // 7, 4, 9 => 8
+
+                    else if (ch_val(values, [user_char, '', '', '', bot_char, '', user_char, '', ''])) return 3;  // 7, 5, 1 => 4
+                    else if (ch_val(values, ['', user_char, '', '', bot_char, '', user_char, '', ''])) return 0;  // 7, 5, 2 => 1
+                    else if (ch_val(values, ['', '', user_char, '', bot_char, '', user_char, '', ''])) return getRandomItem([0, 8]);  // 7, 5, 3 => 1, 9
+                    else if (ch_val(values, ['', '', '', user_char, bot_char, '', user_char, '', ''])) return 0;  // 7, 5, 4 => 1
+                    else if (ch_val(values, ['', '', '', '', bot_char, user_char, user_char, '', ''])) return 8;  // 7, 5, 6 => 9
+                    else if (ch_val(values, ['', '', '', '', bot_char, '', user_char, user_char, ''])) return 8;  // 7, 5, 8 => 9
+                    else if (ch_val(values, ['', '', '', '', bot_char, '', user_char, '', user_char])) return 7;  // 7, 5, 9 => 8
+
+                    else if (ch_val(values, [user_char, '', '', '', '', '', user_char, bot_char, ''])) return 3;  // 7, 8, 1 => 4
+                    else if (ch_val(values, ['', user_char, '', '', '', '', user_char, bot_char, ''])) return 0;  // 7, 8, 2 => 1
+                    else if (ch_val(values, ['', '', user_char, '', '', '', user_char, bot_char, ''])) return 4;  // 7, 8, 3 => 5
+                    else if (ch_val(values, ['', '', '', user_char, '', '', user_char, bot_char, ''])) return 0;  // 7, 8, 4 => 1
+                    else if (ch_val(values, ['', '', '', '', user_char, '', user_char, bot_char, ''])) return 2;  // 7, 8, 5 => 3
+                    else if (ch_val(values, ['', '', '', '', '', user_char, user_char, bot_char, ''])) return 4;  // 7, 8, 6 => 5
+                    else if (ch_val(values, ['', '', '', '', '', '', user_char, bot_char, user_char])) return 4;  // 7, 8, 9 => 5
+
+                        
+                    else if (ch_val(values, [user_char, '', '', '', bot_char, '', '', user_char, ''])) return 6;  // 8, 5, 1 => 7
+                    else if (ch_val(values, ['', user_char, '', '', bot_char, '', '', user_char, ''])) return getRandomItem([0, 2, 6, 8]);  // 8, 5, 2 => 1, 3, 7, 9
+                    else if (ch_val(values, ['', '', user_char, '', bot_char, '', '', user_char, ''])) return 8;  // 8, 5, 3 => 9
+                    else if (ch_val(values, ['', '', '', user_char, bot_char, '', '', user_char, ''])) return 6;  // 8, 5, 4 => 7
+                    else if (ch_val(values, ['', '', '', '', bot_char, user_char, '', user_char, ''])) return 8;  // 8, 5, 6 => 9
+                    else if (ch_val(values, ['', '', '', '', bot_char, '', user_char, user_char, ''])) return 8;  // 8, 5, 7 => 9
+                    else if (ch_val(values, ['', '', '', '', bot_char, '', '', user_char, user_char])) return 6;  // 8, 5, 9 => 7
+
+                    else if (ch_val(values, [user_char, '', '', '', '', '', bot_char, user_char, ''])) return 4;  // 8, 7, 1 => 5
+                    else if (ch_val(values, ['', user_char, '', '', '', '', bot_char, user_char, ''])) return 4;  // 8, 7, 2 => 5
+                    else if (ch_val(values, ['', '', user_char, '', '', '', bot_char, user_char, ''])) return 4;  // 8, 7, 3 => 5
+                    else if (ch_val(values, ['', '', '', user_char, '', '', bot_char, user_char, ''])) return 4;  // 8, 7, 4 => 5
+                    else if (ch_val(values, ['', '', '', '', user_char, '', bot_char, user_char, ''])) return 1;  // 8, 7, 5 => 2
+                    else if (ch_val(values, ['', '', '', '', '', user_char, bot_char, user_char, ''])) return 4;  // 8, 7, 6 => 5
+                    else if (ch_val(values, ['', '', '', '', '', '', bot_char, user_char, user_char])) return getRandomItem([2, 4]);  // 8, 7, 9 => 3, 5
+                        
+                    else if (ch_val(values, [user_char, '', '', '', '', '', '', user_char, bot_char])) return 1;  // 8, 9, 1 => 2
+                    else if (ch_val(values, ['', user_char, '', '', '', '', '', user_char, bot_char])) return 4;  // 8, 9, 2 => 5
+                    else if (ch_val(values, ['', '', user_char, '', '', '', '', user_char, bot_char])) return 4;  // 8, 9, 3 => 5
+                    else if (ch_val(values, ['', '', '', user_char, '', '', '', user_char, bot_char])) return 4;  // 8, 9, 4 => 5
+                    else if (ch_val(values, ['', '', '', '', user_char, '', '', user_char, bot_char])) return 1;  // 8, 9, 5 => 2
+                    else if (ch_val(values, ['', '', '', '', '', user_char, '', user_char, bot_char])) return 4;  // 8, 9, 6 => 5
+                    else if (ch_val(values, ['', '', '', '', '', '', user_char, user_char, bot_char])) return getRandomItem([0, 4]);  // 8, 9, 7 => 1, 5
+                        
+                    
+                    else if (ch_val(values, [user_char, '', '', '', bot_char, '', '', '', user_char])) return getRandomItem([2, 6]);  // 9, 5, 1 => 3, 7
+                    else if (ch_val(values, ['', user_char, '', '', bot_char, '', '', '', user_char])) return 2;  // 9, 5, 2 => 3
+                    else if (ch_val(values, ['', '', user_char, '', bot_char, '', '', '', user_char])) return 5;  // 9, 5, 3 => 6
+                    else if (ch_val(values, ['', '', '', user_char, bot_char, '', '', '', user_char])) return 6;  // 9, 5, 4 => 7
+                    else if (ch_val(values, ['', '', '', '', bot_char, user_char, '', '', user_char])) return 2;  // 9, 5, 6 => 3
+                    else if (ch_val(values, ['', '', '', '', bot_char, '', user_char, '', user_char])) return 7;  // 9, 5, 7 => 8
+                    else if (ch_val(values, ['', '', '', '', bot_char, '', '', user_char, user_char])) return 6;  // 9, 5, 8 => 7
+                    
+                    else if (ch_val(values, [user_char, '', '', '', '', bot_char, '', '', user_char])) return 4;  // 9, 6, 1 => 5
+                    else if (ch_val(values, ['', user_char, '', '', '', bot_char, '', '', user_char])) return 4;  // 9, 6, 2 => 5
+                    else if (ch_val(values, ['', '', user_char, '', '', bot_char, '', '', user_char])) return 4;  // 9, 6, 3 => 5
+                    else if (ch_val(values, ['', '', '', user_char, '', bot_char, '', '', user_char])) return getRandomItem([4, 6]);  // 9, 6, 4 => 5, 7
+                    else if (ch_val(values, ['', '', '', '', user_char, bot_char, '', '', user_char])) return 7;  // 9, 6, 5 => 8
+                    else if (ch_val(values, ['', '', '', '', '', bot_char, user_char, '', user_char])) return 7;  // 9, 6, 7 => 8
+                    else if (ch_val(values, ['', '', '', '', '', bot_char, '', user_char, user_char])) return 6;  // 9, 6, 8 => 7
+                        
+                    else if (ch_val(values, [user_char, '', '', '', '', '', '', bot_char, user_char])) return 4;  // 9, 8, 1 => 5
+                    else if (ch_val(values, ['', user_char, '', '', '', '', '', bot_char, user_char])) return 2;  // 9, 8, 2 => 3
+                    else if (ch_val(values, ['', '', user_char, '', '', '', '', bot_char, user_char])) return 5;  // 9, 8, 3 => 6
+                    else if (ch_val(values, ['', '', '', user_char, '', '', '', bot_char, user_char])) return 5;  // 9, 8, 4 => 6
+                    else if (ch_val(values, ['', '', '', '', user_char, '', '', bot_char, user_char])) return 0;  // 9, 8, 5 => 1
+                    else if (ch_val(values, ['', '', '', '', '', user_char, '', bot_char, user_char])) return 2;  // 9, 8, 6 => 3
+                    else if (ch_val(values, ['', '', '', '', '', '', user_char, bot_char, user_char])) return 4;  // 9, 8, 7 => 5
+
+                    else {
+
+                        let game_null_items = [];
+
+                        for (let index = 0; index < game_items.length; index++) {
+
+                            const game_item = game_items[index];
+
+                            if (game_item.value == '') game_null_items.push(index);
+
+                        }
+
+                        console.log("bot chooses randomly!");
+
+                        return getRandomItem(game_null_items);
+                        
+                    };
+
+                }
+
+                return checker_values(values);
             }
 
             for (let i = 0; i < game_options.length; i++) {
@@ -175,8 +471,6 @@ export class Game {  /* The TicTacToe Game */
 
                     this_option.disabled = true;
 
-                    checker(game_options);
-
                     let values = [];
 
                     for (let i = 0; i < game_options.length; i++) {
@@ -189,27 +483,21 @@ export class Game {  /* The TicTacToe Game */
 
                     let status = values.join('').length < 8;
 
+                    checker(game_options);
+
                     if (sessionStorage.getItem('turn') != sessionStorage.getItem('you') && status) {
-                        
+
                         gameBox.classList.add('loading');
 
                         setTimeout(() => {
 
-                            let game_null_options = [];
+                            try {
+                                game_options[checker_items_bot(game_options)].click();
+                            } catch (error) {}
 
-                            for (let index = 0; index < game_options.length; index++) {
+                            setTimeout(() => gameBox.classList.remove('loading'), 500);
 
-                                const game_option = game_options[index];
-
-                                if (game_option.value == '') game_null_options.push(index);
-
-                            }
-
-                            game_options[getRandomItem(game_null_options)].click();
-
-                            setTimeout(() => gameBox.classList.remove('loading'), 700);
-
-                        }, 500);
+                        }, 250);
 
                     }
                 });
@@ -248,7 +536,7 @@ export class Game {  /* The TicTacToe Game */
 
             }
 
-        } else location.reload();
+        } else this.start();
 
     }
     alert() {
@@ -256,9 +544,9 @@ export class Game {  /* The TicTacToe Game */
         const show = (status, title) => {
 
             const alertBox = document.createElement('section');
-        
+
             alertBox.setAttribute('id', 'alert');
-        
+
             alertBox.classList.add(status);
 
             var _alert = document.createElement('div');
@@ -300,14 +588,21 @@ export class Game {  /* The TicTacToe Game */
 
                 clearInterval(this.ch_it_time);
 
-                event.srcElement.parentNode.parentNode.parentNode.parentNode.remove();
-                
-                document.querySelector('#game-box').remove();
-                
-                document.querySelector('#turn').remove();
+                try {
 
-                this.checkUpStart(sessionStorage.getItem('rival'));
-            
+                    document.querySelector('#game-box').remove();
+
+                    document.querySelector('#turn').remove();
+
+                    event.srcElement.parentNode.parentNode.parentNode.parentNode.remove();
+
+                    this.checkUpStart(sessionStorage.getItem('rival'));
+
+                } catch (error) {
+                    console.error(error);
+                    _alert_btn_repeat.click();
+                }
+
             });
 
             _alert_btn_box.appendChild(_alert_btn_repeat);
@@ -317,7 +612,7 @@ export class Game {  /* The TicTacToe Game */
             alertBox.appendChild(_alert);
 
             this.app.appendChild(alertBox);
-        
+
         }
 
         return {
@@ -340,7 +635,7 @@ export class Game {  /* The TicTacToe Game */
         title_g3.innerText = title_g3.innerText = "choose your rival";
 
         var g3_items = document.createElement('div');
-        
+
         g3_items.id = 'g3_items';
 
         var label_user = document.createElement('label');
@@ -365,7 +660,7 @@ export class Game {  /* The TicTacToe Game */
         // rbtn_bot.checked = true;
 
         rbtn_user.type = rbtn_bot.type = 'radio';
-        
+
         rbtn_user.name = rbtn_bot.name = 'rival';
 
         const next = event => {
@@ -381,17 +676,17 @@ export class Game {  /* The TicTacToe Game */
         }
 
         rbtn_user.addEventListener('click', next);
-        
+
         rbtn_bot.addEventListener('click', next);
 
         g3_box.appendChild(title_g3);
 
         g3_items.appendChild(rbtn_user);
-        
+
         g3_items.appendChild(label_user);
 
         g3_items.appendChild(rbtn_bot);
-        
+
         g3_items.appendChild(label_bot);
 
         g3_box.appendChild(g3_items);
