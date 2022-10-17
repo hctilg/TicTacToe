@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', event => {
             // Here, I use it to make an image appear on the page
             let objectURL = URL.createObjectURL(blob);
             
-            var github_mark = new Image(32);
+            var github_mark = new Image(34);
             github_mark.loading = "lazy";
             github_mark.src = objectURL;
             github_mark.title = "View in Github";
@@ -43,8 +43,8 @@ document.addEventListener('DOMContentLoaded', event => {
 
 });
 
-document.addEventListener('dblclick', event => event.preventDefault(), false);
-
 document.addEventListener('contextmenu', event => event.preventDefault(), false);
 
-document.addEventListener('keydown', event => event.preventDefault(), false);
+document.addEventListener('keydown', event => {
+    if (event.code != "F11") event.preventDefault();
+}, false);

@@ -180,7 +180,7 @@ body#app {
     background-color: #fafbfb;
     width: calc(200px + 32vw + 2vh);max-width: 680px;
     height: calc(200px + 32vw + 2vh);max-height: 680px;
-    padding: 8pt;
+    padding: 10px;
     border-radius: 25pt;
     overflow: hidden;
     position: relative;
@@ -215,7 +215,7 @@ body#app {
 #game-box input{
     background: #f6f4f4;
     color: #101010f3;
-    margin: 8pt;
+    margin: 10px;
     border-radius: 14pt;
 
     display: flex;
