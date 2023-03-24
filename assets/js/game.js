@@ -1,5 +1,3 @@
-/* Coded By https://github.com/msfpt */
-
 // get random integer
 const random = (min, max) => (Math.floor(Math.random() * (max - min)) + min);
 
