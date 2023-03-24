@@ -2,7 +2,7 @@
     "short_name": "Tic-Tac-Toe",
     "name": "Tic-Tac-Toe Game",
     "description": "Play the classic Tic-Tac-Toe game (also called Noughts and Crosses) for free online with one or two players.",
-    "categories": ["play", "tic tac toe", "noughts and crosses", "xo game", "two player", "against computer", "classic games", "educational", "msfpt"],
+    "categories": ["play", "tic tac toe", "noughts and crosses", "xo game", "two player", "against computer", "classic games", "educational", "0x6d7366"],
     "display_override": ["fullscreen", "minimal-ui"],
     "display": "standalone",
     "lang": "en_US",
