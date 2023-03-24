@@ -10,4 +10,4 @@
 
 <br>
 
-### [View](https://msfpt.github.io/0x6d7366)
+### [View](https://0x6d7366.github.io/TicTacToe)
