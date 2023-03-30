@@ -12,44 +12,15 @@ body#app {
     width: 100vw;
     height: 100vh;
     background-color: #0deb83f5;
+    color-scheme: #0deb83f5;
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     display: flex;
+    align-items: center;
     flex-flow: column nowrap;
     justify-content: space-evenly;
-    align-items: center;
-
     font-family: var(--fonts-family);
     color: #101010;
-
-    /* transition: all .4s ease-in-out; */
-}
-
-#github_link {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    display: block;
-    z-index: 46;
-}
-
-@media screen and (max-width:360px) {
-    #github_link {
-        top: unset;
-        right: unset;
-        left: 20px !important;
-        bottom: 15px !important;
-    }
-}
-
-#github_link img {
-    opacity: 0.65;
-    width: calc(32px + 0.5vw);
-    transition: all .2s ease-in-out;
-}
-
-#github_link:hover img {
-    opacity: 0.75;
 }
 
 #getTypeRival {
