@@ -152,8 +152,14 @@ export class Game {  /* The TicTacToe Game */
 
                 var res = checkGame(game_all_options);
 
-                if (res.X) this.alert().victory(`${(sessionStorage.getItem('you') == 'X') ? 'You' : 'Bot'} won!`);
-                else if (res.O) this.alert().victory(`${(sessionStorage.getItem('you') == 'O') ? 'You' : 'Bot'} won!`);
+                if (res.X) {
+                    if (sessionStorage.getItem('you') == 'X') this.alert().victory('You won!');
+                    else this.alert().lost('Bot won!');
+                }
+                else if (res.O) {
+                    if (sessionStorage.getItem('you') == 'O') this.alert().victory('You won!');
+                    else this.alert().lost('Bot won!');
+                }
                 else {
                     if (res.status) this.alert().equal('Severe equal.');
                     else setTurn();
@@ -493,9 +499,9 @@ export class Game {  /* The TicTacToe Game */
                                 game_options[checker_items_bot(game_options)].click();
                             } catch (error) {}
 
-                            setTimeout(() => gameBox.classList.remove('loading'), 500);
+                            gameBox.classList.remove('loading');
 
-                        }, 250);
+                        }, 200);
 
                     }
                 });
