@@ -59,33 +59,36 @@ body.active .overlay {
     transition: all 0.4s ease;
     position: fixed;
     z-index: 1003;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     background-color: #fcfcfc;
     color: #222;
-    width: 100vw;
-    height: 90px;
+    width: calc(100vw - 25px);
+    max-width: 400px;
+    
     display: flex;
     flex-flow: column nowrap;
+    border-radius: 4px;
 }
 
 body:not(.get-rival) #get-rival {
-    bottom: -200%;
+    transform: translateX(-50%) translateY(200%);
 }
 
 #get-rival h2 {
     font-size: 18.2px;
     text-align: center;
-    margin: 12px auto 0;
+    margin: 17px auto 17.5px;
 }
 
 #get-rival > div {
-    position: absolute;
+    /* position: absolute; */
     bottom: 0;
     left: 0;
     right: 0;
-    width: 100vw;
+    width: 100%;
     height: auto;
     display: flex;
     flex-flow: row nowrap;
@@ -96,7 +99,7 @@ body:not(.get-rival) #get-rival {
     background-color: rgba(0 0 0 / 2%);
     font-size: 16px;
     text-align: center;
-    padding: 10px;
+    padding: 12px 0;
     cursor: pointer;
     width: 50vw;
 }
@@ -213,6 +216,7 @@ body:not(.message) #message {
     display: none;
 }
 
+.welcome #message .wm,
 .you-win #message .yw,
 .bot-win #message .by,
 .x-win #message .xw,
@@ -224,4 +228,15 @@ body:not(.message) #message {
 #message span b {
     font-size: calc(45px + 5vw);
     font-weight: normal;
+}
+
+#message span a {
+    font-size: calc(18px + 0.4vw);
+    text-decoration: none;
+    font-weight: normal;
+    color: #ccc;
+}
+
+#message span a:hover {
+    text-decoration: underline #0d9be2;
 }

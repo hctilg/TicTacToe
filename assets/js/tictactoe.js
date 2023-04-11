@@ -32,7 +32,7 @@ export class TicTacToe {
         this.currentPlayer = this.player = random_item(['X', 'O']);
 
         document.body.classList.add('active');
-        document.body.classList.remove('get-rival', 'message', 'you-win', 'bot-win', 'x-win', 'o-win', 'equal');
+        document.body.classList.remove('get-rival', 'message', 'welcome', 'you-win', 'bot-win', 'x-win', 'o-win', 'equal');
         
     }
 
