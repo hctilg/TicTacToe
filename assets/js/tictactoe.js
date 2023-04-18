@@ -63,22 +63,22 @@ export class TicTacToe {
         let values = [];
         this.options.forEach(option => values.push(option.value));
 
-        const checkValues = player => {
+        const checkBoard = (board, player) => {
             return (
                 // winCombinations :
-                /* 1 (—) */ (values[0] == player && values[1] == player && values[2] == player) ||
-                /* 2 (—) */ (values[3] == player && values[4] == player && values[5] == player) ||
-                /* 3 (—) */ (values[6] == player && values[7] == player && values[8] == player) ||
-                /* 1 (|) */ (values[0] == player && values[3] == player && values[6] == player) ||
-                /* 2 (|) */ (values[1] == player && values[4] == player && values[7] == player) ||
-                /* 3 (|) */ (values[2] == player && values[5] == player && values[8] == player) ||
-                /* 1 (\) */ (values[0] == player && values[4] == player && values[8] == player) ||
-                /* 2 (/) */ (values[2] == player && values[4] == player && values[6] == player)
-            ) ? true : false;
+                /* 1-2-3 [—] */ (board[0] == player && board[1] == player && board[2] == player) ||
+                /* 4-5-6 [—] */ (board[3] == player && board[4] == player && board[5] == player) ||
+                /* 7-8-9 [—] */ (board[6] == player && board[7] == player && board[8] == player) ||
+                /* 1-4-7 [|] */ (board[0] == player && board[3] == player && board[6] == player) ||
+                /* 2-5-8 [|] */ (board[1] == player && board[4] == player && board[7] == player) ||
+                /* 3-6-9 [|] */ (board[2] == player && board[5] == player && board[8] == player) ||
+                /* 1-5-9 [\] */ (board[0] == player && board[4] == player && board[8] == player) ||
+                /* 3-5-7 [/] */ (board[2] == player && board[4] == player && board[6] == player)
+            );
         }
 
-        var res_X = checkValues('X');
-        var res_O = checkValues('O');
+        var res_X = checkBoard(values, 'X');
+        var res_O = checkBoard(values, 'O');
 
         if (res_X) {
             if (this.rivalType == "BOT") {
