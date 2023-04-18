@@ -23,11 +23,13 @@ export class TicTacToe {
      */
     init(rival='BOT') {
 
+        this.board = Array.from(Array(9).keys());
+
         this.rivalType = rival.trim().toUpperCase() == "BOT" ? "BOT" : "USER";
 
         this.options = document.querySelectorAll('.option input');
 
-        this.options.forEach( option => option.onclick = event => this.render(event, option) );
+        this.options.forEach((option, index) => option.onclick = () => this.render(index, option));
 
         this.currentPlayer = this.player = random_item(['X', 'O']);
 
@@ -37,23 +39,126 @@ export class TicTacToe {
     }
 
     /**
-     * render game board
+     * fill target Square
+     * @param {HTMLElement} element 
      */
-    render(event, element) {
+    fillSquare (id, element) {
         element.disabled = true;
+        this.board[id] = this.currentPlayer;
         element.setAttribute('value', this.currentPlayer);
         element.classList.add(this.currentPlayer.toLowerCase());
-        this.switchPlayer();
-        if (this.rivalType == "BOT" && this.player != this.currentPlayer) {
-            var _options = [];
-            this.options.forEach(option => {
-                if (option.value == '') _options.push(option);
-            });
-            if (_options.length > 1) setTimeout(() => {
-                random_item(_options).click();
-            }, 200);
+    }
+
+    /**
+     * @returns 
+     */
+    getAvailableMoves(board) {
+        return board.filter(e => typeof e == 'number');
+    }
+
+    /**
+     * Minimax algorithm
+     * @param {Array} board 
+     * @param {Number} depth 
+     * @param {boolean} isMaximizingPlayer 
+     * @returns 
+     */
+    minimax(board, depth, isMaximizingPlayer) {
+        const aiPlayer = this.player == 'X' ? 'O' : 'X';
+        
+        if (this.checkBoard(board, aiPlayer)) return 10 - depth;
+        else if (this.checkBoard(board, this.player)) return -10 + depth;
+        else if (this.isBoardFull()) return 0;
+      
+        if (isMaximizingPlayer) {
+            let bestScore = -Infinity;
+            const availableMoves = this.getAvailableMoves(board);
+      
+            for (let i = 0; i < availableMoves.length; i++) {
+                const squareId = availableMoves[i];
+                board[squareId] = aiPlayer;
+                const score = this.minimax(board, depth + 1, false);
+                board[squareId] = squareId;
+                bestScore = Math.max(bestScore, score);
+            }
+      
+            return bestScore;
+        } else {
+            let bestScore = Infinity;
+            const availableMoves = this.getAvailableMoves(board);
+            
+            for (let i = 0; i < availableMoves.length; i++) {
+                const squareId = availableMoves[i];
+                board[squareId] = this.player;
+                const score = this.minimax(board, depth + 1, true);
+                board[squareId] = squareId;
+                bestScore = Math.min(bestScore, score);
+            }
+          
+            return bestScore;
         }
+    }
+
+    /**
+     * ai moves
+     */
+    aiMove() {
+        var board = this.board;
+        const availableMoves = this.getAvailableMoves(board);
+        const aiPlayer = this.player == 'X' ? 'O' : 'X';
+        let bestScore = -Infinity;
+        let move;
+
+        for (let i = 0; i < availableMoves.length; i++) {
+            const squareId = availableMoves[i];
+            board[squareId] = aiPlayer;
+            const score = this.minimax(this.board, 0, false);
+            board[squareId] = squareId;
+            
+            if (score > bestScore) {
+               bestScore = score;
+               move = squareId;
+            }
+        }
+
+        if (availableMoves.length !== 0) setTimeout(() => this.options[move].click(), 200);
+    }
+
+    /**
+     * render game board
+     * @param {*} event 
+     * @param {HTMLElement} element 
+     */
+    render(id, element) {
+        this.fillSquare(id, element);
+        this.switchPlayer();
+        if (
+            this.rivalType == "BOT" &&
+            this.player != this.currentPlayer
+        ) this.aiMove();
         this.checkGame();
+    }
+
+    /**
+     * check the board is full
+     * @returns 
+     */
+    isBoardFull() {
+        return this.board.filter(e => typeof e == 'number').length == 0;
+    }
+
+    checkBoard(board, player) {
+        return (
+            // winCombinations :
+            /* 1-2-3 [—] */ (board[0] == player && board[1] == player && board[2] == player) ||
+            /* 4-5-6 [—] */ (board[3] == player && board[4] == player && board[5] == player) ||
+            /* 7-8-9 [—] */ (board[6] == player && board[7] == player && board[8] == player) ||
+            /* 1-4-7 [|] */ (board[0] == player && board[3] == player && board[6] == player) ||
+            /* 2-5-8 [|] */ (board[1] == player && board[4] == player && board[7] == player) ||
+            /* 3-6-9 [|] */ (board[2] == player && board[5] == player && board[8] == player) ||
+            /* 1-5-9 [\] */ (board[0] == player && board[4] == player && board[8] == player) ||
+            /* 3-5-7 [/] */ (board[2] == player && board[4] == player && board[6] == player)
+        );
     }
 
     /**
@@ -63,22 +168,8 @@ export class TicTacToe {
         let values = [];
         this.options.forEach(option => values.push(option.value));
 
-        const checkBoard = (board, player) => {
-            return (
-                // winCombinations :
-                /* 1-2-3 [—] */ (board[0] == player && board[1] == player && board[2] == player) ||
-                /* 4-5-6 [—] */ (board[3] == player && board[4] == player && board[5] == player) ||
-                /* 7-8-9 [—] */ (board[6] == player && board[7] == player && board[8] == player) ||
-                /* 1-4-7 [|] */ (board[0] == player && board[3] == player && board[6] == player) ||
-                /* 2-5-8 [|] */ (board[1] == player && board[4] == player && board[7] == player) ||
-                /* 3-6-9 [|] */ (board[2] == player && board[5] == player && board[8] == player) ||
-                /* 1-5-9 [\] */ (board[0] == player && board[4] == player && board[8] == player) ||
-                /* 3-5-7 [/] */ (board[2] == player && board[4] == player && board[6] == player)
-            );
-        }
-
-        var res_X = checkBoard(values, 'X');
-        var res_O = checkBoard(values, 'O');
+        var res_X = this.checkBoard(values, 'X');
+        var res_O = this.checkBoard(values, 'O');
 
         if (res_X) {
             if (this.rivalType == "BOT") {
@@ -91,9 +182,7 @@ export class TicTacToe {
                 if (this.player == 'O') this.down('you-win');
                 else this.down('bot-win');
             } else this.down('o-win');
-        } else {
-            if (values.join('').length > 8) this.down('equal');
-        }
+        } else if (this.isBoardFull()) this.down('equal');
 
     }
 
