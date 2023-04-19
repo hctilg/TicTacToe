@@ -21,11 +21,13 @@ export class TicTacToe {
     /**
      * initialize game
      */
-    init(rival='BOT') {
+    init(type="medium") {
 
         this.board = Array.from(Array(9).keys());
 
-        this.rivalType = rival.trim().toUpperCase() == "BOT" ? "BOT" : "USER";
+        this.type = type;
+        
+        this.rivalType = type !== 'pvp' ? "BOT" : "USER";
 
         this.options = document.querySelectorAll('.option input');
 
@@ -34,7 +36,7 @@ export class TicTacToe {
         this.currentPlayer = this.player = random_item(['X', 'O']);
 
         document.body.classList.add('active');
-        document.body.classList.remove('get-rival', 'message', 'welcome', 'you-win', 'bot-win', 'x-win', 'o-win', 'equal');
+        document.body.classList.remove('start', 'message', 'welcome', 'you-win', 'bot-win', 'x-win', 'o-win', 'equal');
         
     }
 
@@ -121,6 +123,9 @@ export class TicTacToe {
             }
         }
 
+        if (this.type == 'easy') move = random_item(availableMoves);
+        if (this.type == 'medium') move = random_item([move, random_item(availableMoves)]);
+
         if (availableMoves.length !== 0) setTimeout(() => this.options[move].click(), 200);
     }
 
@@ -203,7 +208,7 @@ export class TicTacToe {
             option.onclick = () => {};
             option.disabled = false;
         });
-        document.body.classList.add('get-rival');
+        document.body.classList.add('start');
     }
 
     /**

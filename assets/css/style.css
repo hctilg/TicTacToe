@@ -55,62 +55,41 @@ body.active .overlay {
     display: none !important;
 }
 
-#get-rival {
+#start-game {
     transition: all 0.4s ease;
     position: fixed;
     z-index: 1003;
-    bottom: 8%;
+    bottom: 60px;
     left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    width: calc(100vw - 45px);
+    max-width: 350px;
     background-color: #fcfcfc;
-    color: #222;
-    width: calc(100vw - 25px);
-    max-width: 400px;
-    
-    display: flex;
-    flex-flow: column nowrap;
     border-radius: 4px;
+    padding: 2px 0;
+    color: #222;
+    overflow: hidden;
+    transform: translateX(-50%) translateY(0%);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-body:not(.get-rival) #get-rival {
-    transform: translateX(-50%) translateY(200%);
-}
-
-#get-rival h2 {
-    font-size: 18.2px;
-    text-align: center;
-    margin: 17px auto 17.5px;
-}
-
-#get-rival > div {
-    /* position: absolute; */
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-flow: row nowrap;
-    border-top: 1px solid rgba(0 0 0 / 8%);
-}
-
-#get-rival > div div {
+#start-game .btn {
     background-color: rgba(0 0 0 / 2%);
+    border-bottom: 1px solid rgba(0 0 0 / 8%);
+    padding: 15px 0;
     font-size: 16px;
     text-align: center;
-    padding: 12px 0;
     cursor: pointer;
-    width: 50vw;
+}
+#start-game .btn:hover {
+    background-color: rgba(0 0 0 / 10%);
 }
 
-#get-rival > div div:active {
-    background-color: rgba(0 0 0 / 5%);
-    opacity: 0.95;
+#start-game .btn:last-child {
+    border: none !important;
 }
 
-#set-rival-user {
-    border-right: 1px solid rgba(0 0 0 / 8%);
+body:not(.start) #start-game {
+    transform: translateX(-50%) translateY(300%);
 }
 
 body:not(.active) #board {
