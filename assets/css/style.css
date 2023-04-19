@@ -59,7 +59,7 @@ body.active .overlay {
     transition: all 0.4s ease;
     position: fixed;
     z-index: 1003;
-    bottom: 60px;
+    bottom: 70px;
     left: 50%;
     width: calc(100vw - 45px);
     max-width: 350px;
